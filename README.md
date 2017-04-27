@@ -6,6 +6,10 @@ bash script for OS Vyatta.  It is used for testing internet connection and reser
 
 ***On first router*** 
 ``` 
+route add -host 8.8.4.4 gw *.*.*.* 
+route add -host 208.67.222.123 gw *.*.*.* 
+*.*.*.* is inteface of seconf router
+
 mkdir /config/scripts/gwbackupNomain
 cd /config/scripts/gwbackupNomain
 
@@ -19,9 +23,6 @@ For autostart make link
 ln -s /config/scripts/gwbackupNomain/gwbackup /config/scripts/postconfig.d/gwbackupNomain
 
 ```
-
-
-chooseGW -  bash script for OS Vyatta.   It is used for change VRRP Master status using priority.
 
 For single word command in CLI like chooseGW make link to /bin
 
@@ -99,7 +100,7 @@ Choose master router (1 or 2 or rt1 or rt2) or press Enter to exit
 
 And now choose VLAN(s) for this Master. Press Enter for finish choosing VLANs.
 ```
-11
+VLAN number
 ```
 press enter
 
@@ -112,3 +113,32 @@ press yes or no
 Choose another router or press "ENTER" for exit.
 
 ****This setting will affect on next cycle of gwbackup in load balance state!**** 
+
+
+###Testing 
+```
+show log
+```
+You can see log message with subject "***GWBACKUP"
+Also you can search VRRP message in log file for debug
+
+
+To see for what VLANs router is master
+```
+show vrrp summary
+```
+For detailed view of VRRP groups
+```
+show vrrp
+```
+
+###Debuging
+For debuging  
+```
+bash /config/script/gwbackupNomain/gwbackupNomain -v
+```
+
+For extended debuging  
+```
+bash /config/script/gwbackupNomain/gwbackupNomain -vv
+```
